@@ -21,3 +21,15 @@ type Query {
   """Return one todo by ID"""
   oneTodo(id: Int!): Todo!
 }
+
+type Mutation {
+  createTodo(todo: CreateTodoInput!): Todo!
+}
+
+input CreateTodoInput {
+  """Header of TODO"""
+  title: String!
+
+  """What needs to be done?"""
+  description: String!
+}

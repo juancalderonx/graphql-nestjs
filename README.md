@@ -43,3 +43,4 @@ Teslo es un ECommerce Lorem ipsum dolor sit amet consectetur adipisicing elit. N
 ## Dependencies
 1. yarn add @nestjs/graphql @nestjs/apollo graphql apollo-server-express
 2. yarn add apollo-server-core
+3. yarn add class-validator class-transformer

@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { NotFoundException } from '@nestjs/common/exceptions';
+import { CreateTodoInput } from './dto/inputs/create-todo.input';
 import { Todo } from './entities/todo.entity';
 
 @Injectable()
@@ -23,6 +24,17 @@ export class TodoService {
     if(!todo) throw new NotFoundException(`Todo with id ${id} not found`);
 
     return todo;
+  }
+
+  createTodo(todo: CreateTodoInput): Todo {
+     const newTodo = new Todo();
+     newTodo.title = todo.title;
+     newTodo.description = todo.description;
+     newTodo.id = Math.max(...this.todos.map( newTodo => newTodo.id ), 0) + 1;
+
+    this.todos.push(newTodo);
+
+     return newTodo;
   }
 
 }
