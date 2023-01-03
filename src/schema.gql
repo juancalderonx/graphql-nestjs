@@ -3,5 +3,8 @@
 # ------------------------------------------------------
 
 type Query {
-  helloWorld: String!
+  """This is a test function that returns Hello World"""
+  FunctionTest: String!
+  numberRandom: Float!
+  getRandomFromZeroTo: Int!
 }
