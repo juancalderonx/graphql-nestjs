@@ -2,9 +2,22 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
+type Todo {
+  id: Int!
+  title: String!
+  description: String!
+  completed: Boolean!
+}
+
 type Query {
   """This is a test function that returns Hello World"""
   FunctionTest: String!
   numberRandom: Float!
-  getRandomFromZeroTo: Int!
+
+  """Random number from 0 to argument "to" (default 6)"""
+  getRandomFromZeroTo(to: Int): Int!
+  allTodos: [Todo!]!
+
+  """Return one todo by ID"""
+  oneTodo(id: Int!): Todo!
 }
