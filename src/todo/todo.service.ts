@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { NotFoundException } from '@nestjs/common/exceptions';
+import { StatusArgs } from './dto/args/status.args';
 import { CreateTodoInput, UpdateTodoInput } from './dto/inputs';
 import { Todo } from './entities/todo.entity';
 
@@ -14,7 +15,25 @@ export class TodoService {
     { id: 5, title: 'Title 5', description: 'Description 5', completed: false },
   ];
 
-  findAll(): Todo[] {
+  get totalTodos() {
+    return this.todos.length;
+  }
+
+  get completedTodos() {
+    const count = this.todos.filter(todo => todo.completed);
+    return count.length;
+  }
+
+  get pendingTodos() {
+    const count =  this.todos.filter(todo => !todo.completed);
+    return count.length;
+  }
+
+  findAll( statusArgs: StatusArgs ): Todo[] {
+    const { status } = statusArgs;
+    
+    if(status !== undefined) return this.todos.filter( todo => todo.completed === status );
+
     return this.todos;
   }
 
@@ -37,8 +56,8 @@ export class TodoService {
      return newTodo;
   }
 
-  updateTodo(todo: UpdateTodoInput): Todo {
-    const { id, title, description, completed } = todo;
+  updateTodo(id: number, todo: UpdateTodoInput): Todo {
+    const { title, description, completed } = todo;
 
     const todoUpdate = this.findOne(id);
 
@@ -51,6 +70,12 @@ export class TodoService {
     this.todos = this.todos.map( todo => { return ( todo.id === id ) ? todoUpdate : todo; } );
 
     return todoUpdate;
+  }
+
+  deleteOneById(id: number): boolean {
+    const todo = this.findOne(id);
+    this.todos = this.todos.filter( todo => todo.id !== id );
+    return true;
   }
 
 }
