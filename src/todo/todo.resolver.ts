@@ -53,6 +53,8 @@ export class TodoResolver {
     return this.todoService.pendingTodos;
   }
 
+  //* Forma de hacer aggregation más general con una sola Query.
+
   @Query( () => AggregationsType, { name: 'todoAggregations' } )
   todoAggregations() {
     return {
